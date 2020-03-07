@@ -1,24 +1,46 @@
-const chainMaker = {
+"use strict";
+
+let chainMaker = {
+  values: [],
+
+  [Symbol.toPrimitive](hint){
+    return this.values.join("~~");
+  },
+
   getLength() {
-    throw 'Not implemented';
-    // remove line with error and write your code here
+    return this.values.length;
   },
-  addLink(value) {
-    throw 'Not implemented';
-    // remove line with error and write your code here
+
+  addLink(value = "") {
+    this.values.push(`( ${value} )`);
+    return this;    
   },
+
   removeLink(position) {
-    throw 'Not implemented';
-    // remove line with error and write your code here
+    let pos = position - 1;
+    if (pos < 0 || pos >= this.values.length){
+      this.values = [];
+      throw Error;
+    }
+    if (!(typeof(position) === "number")){
+      this.values = [];
+      throw Error;
+    }
+    this.values.splice(pos,1);
+    return this;
   },
+
   reverseChain() {
-    throw 'Not implemented';
-    // remove line with error and write your code here
+    this.values.reverse();
+    return this;
   },
+
   finishChain() {
-    throw 'Not implemented';
-    // remove line with error and write your code here
+    let str = String(this);
+    this.values = [];
+    return str;
   }
+  
 };
 
 module.exports = chainMaker;
